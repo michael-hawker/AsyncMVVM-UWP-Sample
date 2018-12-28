@@ -1,14 +1,20 @@
-﻿<Page
-    x:Class="AsyncMVVMApp.MainPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:AsyncMVVMApp"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+﻿<Page x:Class="AsyncMVVMApp.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:AsyncMVVMApp"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      mc:Ignorable="d">
 
     <Grid>
-
+        <!--  Busy indicator  -->
+        <TextBlock Text="Loading..." Visibility="{x:Bind VM.UrlByteCount.IsNotCompleted, Mode=OneWay}" />
+        <!--  Results  -->
+        <TextBlock Text="{x:Bind VM.UrlByteCount.Result, Mode=OneWay}" Visibility="{x:Bind VM.UrlByteCount.IsSuccessfullyCompleted, Mode=OneWay}" />
+        <!--  Error details  -->
+        <TextBlock Foreground="Red"
+                   Text="{x:Bind VM.UrlByteCount.ErrorMessage, Mode=OneWay}"
+                   Visibility="{Binding UrlByteCount.IsFaulted, Mode=OneWay}" />
     </Grid>
 </Page>

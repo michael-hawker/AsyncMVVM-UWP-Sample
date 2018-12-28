@@ -22,6 +22,8 @@ namespace AsyncMVVMApp
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public MainViewModel VM { get; } = new MainViewModel();
+
         public MainPage()
         {
             this.InitializeComponent();
