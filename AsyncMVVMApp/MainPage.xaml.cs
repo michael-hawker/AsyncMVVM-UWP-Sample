@@ -24,6 +24,8 @@ namespace AsyncMVVMApp
     {
         public MainViewModel VM { get; } = new MainViewModel();
 
+        public MainWindowViewModel MWVM { get; } = new MainWindowViewModel();
+
         public MainPage()
         {
             this.InitializeComponent();

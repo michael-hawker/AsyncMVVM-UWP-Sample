@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
-using Windows.Web.Http;
 
 namespace AsyncMVVMApp
 {
@@ -12,6 +10,7 @@ namespace AsyncMVVMApp
     /// </summary>
     public static class MyStaticService
     {
+        // This is the original example method from the first article on databinding.
         public static async Task<int> CountBytesInUrlAsync(string url)
         {
             // Artificial delay to show responsiveness.
@@ -20,9 +19,28 @@ namespace AsyncMVVMApp
             // Download the actual data and count it.
             using (var client = new HttpClient())
             {
-                var data = await client.GetBufferAsync(new Uri(url));
+                var data = await client.GetByteArrayAsync(new Uri(url)).ConfigureAwait(false);
 
-                return (int)data.Length;
+                return data.Length;
+            }
+        }
+
+        // This is the same method as above but also supports cancellation used in the second article.
+        public static async Task<int> DownloadAndCountBytesAsync(string url,
+            CancellationToken token = new CancellationToken())
+        {
+            // Artificial delay to show responsiveness.
+            await Task.Delay(TimeSpan.FromSeconds(5), token).ConfigureAwait(false);
+
+            // Download the actual data and count it.
+            using (var client = new HttpClient())
+            {
+                using (var response = await client.GetAsync(new Uri(url), token).ConfigureAwait(false))
+                {
+                    var data = await
+                      response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+                    return data.Length;
+                }
             }
         }
     }

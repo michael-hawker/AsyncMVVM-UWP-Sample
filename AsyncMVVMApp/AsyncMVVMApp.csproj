@@ -119,6 +119,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CountUrlBytesViewModel.cs" />
+    <Compile Include="Helpers\AsyncCommand.cs" />
+    <Compile Include="Helpers\AsyncCommandBase.cs" />
+    <Compile Include="Helpers\DelegateCommand.cs" />
+    <Compile Include="Helpers\IAsyncCommand.cs" />
     <Compile Include="Helpers\NotifyTaskCompletion.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -126,6 +131,7 @@
     <Compile Include="MainViewModel.cs" />
     <Compile Include="MyStaticService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MainWindowViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

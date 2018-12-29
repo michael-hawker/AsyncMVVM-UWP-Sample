@@ -8,13 +8,66 @@
       mc:Ignorable="d">
 
     <Grid>
-        <!--  Busy indicator  -->
-        <TextBlock Text="Loading..." Visibility="{x:Bind VM.UrlByteCount.IsNotCompleted, Mode=OneWay}" />
-        <!--  Results  -->
-        <TextBlock Text="{x:Bind VM.UrlByteCount.Result, Mode=OneWay}" Visibility="{x:Bind VM.UrlByteCount.IsSuccessfullyCompleted, Mode=OneWay}" />
-        <!--  Error details  -->
-        <TextBlock Foreground="Red"
-                   Text="{x:Bind VM.UrlByteCount.ErrorMessage, Mode=OneWay}"
-                   Visibility="{Binding UrlByteCount.IsFaulted, Mode=OneWay}" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <!--  1st Article Example  -->
+        <StackPanel Grid.Row="0">
+            <!--  Busy indicator  -->
+            <TextBlock Text="Loading..." Visibility="{x:Bind VM.UrlByteCount.IsNotCompleted, Mode=OneWay}" />
+            <!--  Results  -->
+            <TextBlock Text="{x:Bind VM.UrlByteCount.Result, Mode=OneWay}" Visibility="{x:Bind VM.UrlByteCount.IsSuccessfullyCompleted, Mode=OneWay}" />
+            <!--  Error details  -->
+            <TextBlock Foreground="Red"
+                       Text="{x:Bind VM.UrlByteCount.ErrorMessage, Mode=OneWay}"
+                       Visibility="{Binding UrlByteCount.IsFaulted, Mode=OneWay}" />
+        </StackPanel>
+
+        <!--  2nd Article Example  -->
+        <Grid Grid.Row="1">
+            <TextBox Margin="8,8,92,0"
+                     HorizontalAlignment="Stretch"
+                     VerticalAlignment="Top"
+                     Text="{x:Bind MWVM.Url, Mode=TwoWay}" />
+            <Button Width="75"
+                    Margin="8"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Command="{x:Bind MWVM.CountUrlBytesCommand}"
+                    Content="Go" />
+            <ItemsControl Margin="8,40,8,0" ItemsSource="{x:Bind MWVM.Operations}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="local:CountUrlBytesViewModel">
+                        <Grid Margin="0,8,0,0">
+                            <!--  Busy indicator  -->
+                            <TextBlock Text="{x:Bind LoadingMessage}" Visibility="{x:Bind Command.Execution.IsNotCompleted, Mode=OneWay}" />
+                            <!--  Results  -->
+                            <TextBlock Text="{Binding Command.Execution.Result, Mode=OneWay}" Visibility="{x:Bind Command.Execution.IsSuccessfullyCompleted, Mode=OneWay}" />
+                            <!--  Error details  -->
+                            <TextBlock Foreground="Red"
+                                       Text="{Binding Command.Execution.ErrorMessage, Mode=OneWay}"
+                                       Visibility="{x:Bind Command.Execution.IsFaulted, Mode=OneWay}" />
+                            <!--  Canceled  -->
+                            <TextBlock Foreground="Blue"
+                                       Text="Canceled"
+                                       Visibility="{x:Bind Command.Execution.IsCanceled, Mode=OneWay}" />
+
+                            <Button Width="75"
+                                    Margin="0,0,40,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Command="{x:Bind Command.CancelCommand}"
+                                    Content="Cancel" />
+                            <Button Width="32"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Command="{x:Bind RemoveCommand}"
+                                    Content="X" />
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
     </Grid>
 </Page>

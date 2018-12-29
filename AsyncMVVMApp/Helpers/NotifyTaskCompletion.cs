@@ -18,7 +18,7 @@ namespace AsyncMVVMApp.Helpers
             Task = task;
             if (!task.IsCompleted)
             {
-                var _ = WatchTaskAsync(task);
+                TaskCompletion = WatchTaskAsync(task);
             }
         }
 
@@ -60,6 +60,8 @@ namespace AsyncMVVMApp.Helpers
         }
 
         public Task<TResult> Task { get; private set; }
+
+        public Task TaskCompletion { get; private set; }
 
         public TResult Result
         {
